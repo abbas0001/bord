@@ -2,6 +2,7 @@ const routes = require('./routes/routes');
 
 const express = require('express');
 const mongoose = require('mongoose');
+const { response } = require('express');
 
 require('dotenv').config();
 const mongoString = process.env.DATABASE_URL;
@@ -18,11 +19,7 @@ database.once('connected', () => {
 });
 
 const app = express();
-app.use(express.json({
-    verify: (req, res, buf, encoding) => {
-        
-    }
-}));
+app.use(express.raw({type: 'application/json'}));
 app.use('', routes);
 
 app.listen(3000, () => {
