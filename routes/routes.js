@@ -25,15 +25,24 @@ router.post('/createUser', async (req, res) => {
     if (error.length > 0) {
         res.send({ 'error': error });
     } else {
-        const user = new userModel({
-            user: input.user,
-            pass: input.pass
-        });
         try {
-            const dataToSave = await user.save();
-            res.send({
-                message: 'user created'
-            });
+            const searchUser = await userModel.find({ user: input.user });
+            if (searchUser.length > 0) {
+                res.send({ message: 'user exists' });
+            } else {
+                const user = new userModel({
+                    user: input.user,
+                    pass: input.pass
+                });
+                try {
+                    const dataToSave = await user.save();
+                    res.send({
+                        message: 'user created'
+                    });
+                } catch (error) {
+                    console.log(error);
+                }
+            }
         } catch (error) {
             console.log(error);
         }
