@@ -1,8 +1,8 @@
-const routes = require('./routes/routes');
+const createUser = require('./routes/createUser');
+const setAPI = require('./routes/set');
 
 const express = require('express');
 const mongoose = require('mongoose');
-const { response } = require('express');
 
 require('dotenv').config();
 const mongoString = process.env.DATABASE_URL;
@@ -20,7 +20,8 @@ database.once('connected', () => {
 
 const app = express();
 app.use(express.raw({type: 'application/json'}));
-app.use('', routes);
+app.use('', createUser);
+app.use('', setAPI);
 
 app.listen(3000, () => {
     console.log(`Server Started at ${3000}`);
