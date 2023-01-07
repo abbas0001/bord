@@ -1,4 +1,5 @@
 const userModel = require('../models/users');
+const clipModel = require('../models/clips');
 
 const express = require('express');
 
@@ -47,8 +48,22 @@ router.post('/createUser', async (req, res) => {
                     user: input.user,
                     pass: input.pass
                 });
+                const clip = new clipModel({
+                    user: input.user,
+                    clip1: "",
+                    clip2: "",
+                    clip3: "",
+                    clip4: "",
+                    clip5: "",
+                    clip6: "",
+                    clip7: "",
+                    clip8: "",
+                    clip9: "",
+                    clip10: ""
+                });
                 try {
-                    const dataToSave = await user.save();
+                    let dataToSave = await user.save();
+                    dataToSave = await clip.save();
                     res.send({
                         message: 'user created'
                     });
