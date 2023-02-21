@@ -38,3 +38,5 @@ jobs:
         cache: 'npm'
     - run: npm install -g aws-cdk 
     - run: cdk --version
+    - run: npm i
+    - run: cd iac; cdk deploy --require-approval=never
