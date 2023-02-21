@@ -26,16 +26,17 @@ router.post('/set', async (req, res) => {
                 if (user.length != 0) {
                     const clip = await clipModel.find({ user: input.user });
                     const updatedData = { user: input.user };
-                    updatedData.clip1 = clip.clip1;
-                    updatedData.clip2 = clip.clip2;
-                    updatedData.clip3 = clip.clip3;
-                    updatedData.clip4 = clip.clip4;
-                    updatedData.clip5 = clip.clip5;
-                    updatedData.clip6 = clip.clip6;
-                    updatedData.clip7 = clip.clip7;
-                    updatedData.clip8 = clip.clip8;
-                    updatedData.clip9 = clip.clip9;
-                    updatedData.clip10 = clip.clip10;
+                    console.log(clip[0].clip1);
+                    updatedData.clip1 = clip[0].clip1;
+                    updatedData.clip2 = clip[0].clip2;
+                    updatedData.clip3 = clip[0].clip3;
+                    updatedData.clip4 = clip[0].clip4;
+                    updatedData.clip5 = clip[0].clip5;
+                    updatedData.clip6 = clip[0].clip6;
+                    updatedData.clip7 = clip[0].clip7;
+                    updatedData.clip8 = clip[0].clip8;
+                    updatedData.clip9 = clip[0].clip9;
+                    updatedData.clip10 = clip[0].clip10;
                     if (clipResult[0] == 'clip1') {
                         updatedData.clip1 = input.clip1;
                     }
@@ -66,6 +67,14 @@ router.post('/set', async (req, res) => {
                     if (clipResult[0] == 'clip10') {
                         updatedData.clip10 = input.clip10;
                     }
+                    const options = {
+                        new: false
+                    };
+                    try {
+                        const result = await clipModel.findOneAndUpdate({ user: updatedData.user }, updatedData, options);
+                    } catch (error) {
+                        console.log(error);
+                    }
                     console.log(updatedData);
                     res.send({ message: 'clip saved' });
                 } else {
@@ -78,20 +87,6 @@ router.post('/set', async (req, res) => {
             res.send({ error: 'cannot find user key value' });
         }
     }
-    // if (keys.length > 1) {
-    //     res.send({ error: 'only one argument is valid' });
-    //     return;
-    // }
-    // const keysPattern = /(^clip[1-9]{1}$|^clip10$)/;
-    // const keysResult = keysPattern.exec(keys[0]);
-    // if (keysResult != null) {
-    //     const keysPattern = /([1-9]{1}|10)$/;
-    //     const keysResult = keysPattern.exec(keys[0]);
-
-    //     res.end();
-    // } else {
-    //     res.send({ error: 'invalid clip' });
-    // }
 });
 
 module.exports = router;
